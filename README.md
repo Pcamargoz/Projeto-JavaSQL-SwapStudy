@@ -1,173 +1,84 @@
-🧩 Sistema de Gerenciamento — Java | JDBC | DAO | MySQL
+📘 Projeto Java + JDBC + DAO + MySQL
 
-Este repositório contém um projeto completo desenvolvido em Java, utilizando JDBC, Padrão DAO, MySQL, Orientação a Objetos, e boas práticas de arquitetura para acesso a dados.
-O objetivo é demonstrar domínio sobre:
+Projeto de estudo / faculdade — CRUD completo com acesso a banco de dados via JDBC e padrão DAO.
 
-JDBC puro (sem frameworks)
+✅ Visão Geral
 
-CRUD completo
+Este projeto demonstra um sistema de gerenciamento de dados em Java, com arquitetura em camadas, utilizando JDBC para conectar a um banco MySQL e aplicando o padrão DAO (Data Access Object) para separar a lógica de acesso a dados. Permite operações de CRUD (Create, Read, Update, Delete) sobre entidades (ex: Seller, Department — ou conforme seu domínio).
 
-Conexão segura com banco
+O objetivo é:
 
-Tratamento de exceções personalizadas
+Aprender integração Java ↔ MySQL via JDBC. 
 
-Organização do código com camadas profissionais
+Organizar o código com boas práticas de orientação a objetos e arquitetura em camadas.
 
-Reutilização de conexões
+Ter um projeto simples, porém completo, para usar como portfólio backend.
 
-Padrões de repositório e fábrica de DAOs
+🧰 Tecnologias e Ferramentas Utilizadas
 
-🚀 Tecnologias utilizadas
+Java (versão compatível com seu ambiente)
 
-Java 17+
+JDBC (Java Database Connectivity) para conexão com banco de dados MySQL. 
+Google Sites
++1
 
-MySQL
+MySQL (banco relacional)
 
-JDBC
+Padrão DAO + implementação concreta (DAO / DAOImpl) para abstrair persistência
 
-Padrão DAO
+Estrutura organizada por pacotes: entidades (model), DAOs, implementação, configuração de banco, main / programa de teste
 
-Factory Pattern
-
-Orientação a Objetos
-
-Collections (List, Map, HashMap)
-
-Tratamento de exceções com DbException
-
-📂 Estrutura do Projeto
+📂 Estrutura de Pastas (exemplo típico)
 src/
- ├── Application/
- │    └── Program.java
- ├── ModelDao/
- │    ├── SellerDao.java
- │    ├── DepartmentDao.java
- │    └── DaoFactory.java
- ├── ModelDaoImpl/
- │    ├── SellerDaoJDBC.java
- │    └── DepartmentDaoJDBC.java
- ├── ModelEntities/
- │    ├── Seller.java
- │    └── Department.java
- ├── db/
- │    ├── DB.java
- │    ├── DbException.java
- │    └── DbIntegrityException.java
- └── resources/
-      └── db.properties
-
-⚙️ Funcionalidades
-✔ Seller
-
-Inserir vendedor
-
-Buscar por ID
-
-Buscar todos
-
-Buscar por departamento
-
-Atualizar vendedor
-
-Deletar vendedor
-
-✔ Department
-
-Inserir departamento
-
-Buscar por ID
-
-Listar todos
-
-Atualizar departamento
-
-Deletar departamento
-
-🗄️ Modelo de Banco (MySQL)
-
-Tabela Department
-
-CREATE TABLE department (
-  Id INT PRIMARY KEY AUTO_INCREMENT,
-  Name VARCHAR(60)
-);
+ ├── application/        ← classe main / ponto de entrada
+ ├── model/              ← classes de entidade (ex: Seller, Department, etc.)
+ ├── dao/                ← interfaces DAO (ex: SellerDao, DepartmentDao)
+ ├── dao/impl/           ← implementações JDBC das DAOs (ex: SellerDaoJDBC, DepartmentDaoJDBC)
+ ├── db/                 ← configuração de conexão (ex: DB.java, DbException, db properties)
+ └── resources/          ← arquivo de configuração (ex: db.properties)
 
 
-Tabela Seller
+Essa estrutura facilita a manutenção, separação de responsabilidades, e escalabilidade do projeto.
 
-CREATE TABLE seller (
-  Id INT PRIMARY KEY AUTO_INCREMENT,
-  Name VARCHAR(60),
-  Email VARCHAR(80),
-  BirthDate DATE,
-  BaseSalary DOUBLE,
-  DepartmentId INT,
-  FOREIGN KEY (DepartmentId) REFERENCES department(Id)
-);
+✅ Funcionalidades Implementadas
 
-🧠 Pontos importantes do projeto
+Inserção de registros (CREATE)
 
-✔ Uso correto de PreparedStatement
+Consulta por ID e listagem de todos (READ)
 
-✔ Fechamento adequado de ResultSet, Statement e Connection
+Consulta por critérios (ex: por departamento) — se aplicável
 
-✔ Conversão de datas: java.util.Date → java.sql.Date
+Atualização de registros existentes (UPDATE)
 
-✔ Implementação completa do padrão DAO
-
-✔ Uso de Factory Pattern para instanciar DAOs
-
-✔ Utilização de HashMap para otimizar criação repetida de entidades em queries com join
-
-▶️ Como executar
-
-Clone o repositório:
-
-git clone https://github.com/SEU-USUARIO/NOME-DO-REPO.git
+Remoção/deleção de registros (DELETE)
 
 
-Configure o arquivo db.properties:
+💡 Possíveis Melhorias / Próximos Passos
 
-user = seu_usuario
-password = sua_senha
-dburl = jdbc:mysql://localhost:3306/suabase
-useSSL = false
+Adicionar scripts SQL para criação do banco/tabelas — facilita setup para quem clona.
 
+Incluir dados de exemplo ou seed data para testes.
 
-Execute o arquivo:
+Aplicar tratamento de exceções mais robusto (ex: exceções customizadas para erros de banco).
 
-Application/Program.java
+Adicionar testes automatizados (unitários/integrados) para garantir funcionamento — boa prática profissional.
 
-📌 Exemplos de uso (main)
+Documentar mais o código (JavaDoc), comentários claros e README com instruções completas de setup.
 
-Listar todos os vendedores:
-
-List<Seller> list = sellerDao.findAll();
-for (Seller obj : list) {
-    System.out.println(obj);
-}
+Em uma versão futura, considerar uso de frameworks (ex: Spring + JPA/Hibernate), para demonstrar conhecimento de stacks mais usadas em mercado. 
 
 
-Buscar por departamento:
+📚 Aprendizado / O que este projeto demonstra
 
-Department dep = new Department(2, null);
-List<Seller> listDep = sellerDao.findByDepartment(dep);
+Entendimento de JDBC e de como conectar e operar banco relacional em Java. 
 
+Capacidade de organizar código de forma clara e modular — entidades, DAOs, configuração, aplicação.
 
-Inserir novo vendedor:
+Domínio básico/intermediário de POO, conexão com banco, operações CRUD.
 
-Seller newSeller = new Seller(null, "Pedro", "pedro@gmail.com",
-    new Date(), 4000.0, department);
+Boa base para evoluir para projetos mais complexos (APIs, web, frameworks, testes, etc.).
 
-sellerDao.insert(newSeller);
+👤 Autor
 
-🧑‍💻 Autor
-
-Pedro César Camargo dos Santos
-Desenvolvedor Java | Backend | JDBC | Spring em progresso
-Sorocaba — São Paulo
-LinkedIn e GitHub no perfil
-
-⭐ Contribuições
-
-Sinta-se à vontade para abrir PRs, issues ou sugestões!
+Pedro César Camargo dos Santos — estudante de Análise e Desenvolvimento de Sistemas, foco em backend Java.
+Sorocaba, SP — Brasil.
