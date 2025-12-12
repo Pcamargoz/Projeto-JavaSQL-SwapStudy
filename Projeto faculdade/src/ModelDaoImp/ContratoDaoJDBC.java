@@ -22,9 +22,9 @@ public class ContratoDaoJDBC implements ContratoDao {
         try{
             st = conn.prepareStatement(
                     "INSERT INTO department "
-                            + "(fornecedor_id,nome_fornecedor,servico,preco_moedas) "
+                            + "(fornecedor_id,nome_fornecedor,servico,preco_moedas,servico_swap) "
                             +"VALUES "
-                            +"(?,?,?,?) ",
+                            +"(?,?,?,?,?) ",
                     // para gerar a chave aleatoria
                     Statement.RETURN_GENERATED_KEYS);
 
@@ -32,6 +32,7 @@ public class ContratoDaoJDBC implements ContratoDao {
             st.setString(2,obj.getFornecedor());
             st.setString(3,obj.getServico());
             st.setDouble(4,obj.getPrecoM());
+            st.setString(5,obj.getServicoSwap());
             int rowsAffected = st.executeUpdate();
             if(rowsAffected > 0 ){
                 // ele esta pegando a chave que o proprio banco da , quando e inserido alguem
@@ -63,13 +64,14 @@ public class ContratoDaoJDBC implements ContratoDao {
         try{
             st = conn.prepareStatement(
                     "UPDATE contratos "
-                            +"SET forncedor_id = ?, nome_fornecedor = ?, servico = ?, preco_moedas = ? "
+                            +"SET forncedor_id = ?, nome_fornecedor = ?, servico = ?, preco_moedas = ?, servico_swap = ? "
                             + "WHERE Id = ? ");
 
             st.setInt(1,obj.getFornecedor_id());
             st.setString(2,obj.getFornecedor());
             st.setString(3,obj.getServico());
             st.setDouble(4,obj.getPrecoM());
+            st.setString(5,obj.getServicoSwap());
 
             st.setInt(6,obj.getId());
 
@@ -139,6 +141,7 @@ public class ContratoDaoJDBC implements ContratoDao {
         obj.setFornecedor(rs.getString("nome_fornecedor"));
         obj.setServico(rs.getString("servico"));
         obj.setPrecoM(rs.getDouble("preco_moedas"));
+        obj.setServicoSwap(rs.getString("servico_swap"));
         return obj;
     }
 

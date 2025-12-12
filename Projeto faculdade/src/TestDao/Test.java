@@ -2,27 +2,27 @@ package TestDao;
 
 import Modelos.ContratoDao;
 import Modelos.DaoFactory;
+import Modelos.UsuarioDao;
 import program.PuxarContratos;
+import program.Usuario;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class Test {
     static void main() {
-        // -------------- Test Contratos ----------
-        // aqui vamos trabalhar com o Department DAO
         System.out.println(" === Test 1: Contrato findById ====");
         ContratoDao contratoDao = DaoFactory.createContratoDao();
         PuxarContratos c1 = contratoDao.findById(2);
         System.out.println(c1);
 
-        Scanner sc = new Scanner(System.in);
+        /*Scanner sc = new Scanner(System.in);
         System.out.println("\n=== Test 2: contrato findALL =====");
         // guardando dentro de uma lista aqui a lista de la para que a gente possa imprimir no for
         List<PuxarContratos> list = contratoDao.findALL();
         for(PuxarContratos obj : list){
             System.out.println(obj);
-        }
+        }*/
 
         // inserindo alguem no banco de Dados
         /*System.out.println("\n=== Test 3: Department Insert =====");

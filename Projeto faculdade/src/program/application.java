@@ -53,6 +53,7 @@ public class application {
                 System.out.println("Fornecedor: " + c.getFornecedor());
                 System.out.println("Serviço: " + c.getServico());
                 System.out.println("Preço: " + c.getPrecoM());
+                System.out.println("Serviço Swap: " + c.getServicoSwap());
             }
             System.out.println("---------------------");
 
@@ -79,14 +80,22 @@ public class application {
             System.out.println("Fornecedor: " + contratoEscolhido.getFornecedor());
             System.out.println("Serviço: " + contratoEscolhido.getServico());
             System.out.println("Preço: " + contratoEscolhido.getPrecoM());
+            System.out.println("Serviço Swap: " + contratoEscolhido.getServicoSwap());
             System.out.println("---------------------");
 
+            System.out.println("Deseja pagar com Serviço ? (S/N");
+            char resposta4 = sc.next().charAt(0);
+            if(resposta4 == 'S'){
+                System.out.println("Muito Obrigado , Esperamos pela conclusão se ambos os serviços. Ate a Proxima e Ficamos a Disposição !");
+                return;
+            }
             System.out.println("Deseja realizar o pagamento? (S/N)");
             char resposta3 = sc.next().charAt(0);
             double cal = 0.0;
             if (resposta3 == 'S') {
                 //cal = contratoEscolhido.getPrecoM() - cliente.getMoedas();
                 String sql = "UPDATE cliente SET quantidade_moedas = quantidade_moedas - ? WHERE id = ?";
+
                 // indentifcando o fornecedor do contrato para fazer a adição do valor do contrato
                 String sql2 = "UPDATE cliente SET quantidade_moedas = quantidade_moedas + ? WHERE id = ?";
                 Usuario cliente2 = i.buscarPorNome(conn,contratoEscolhido.getFornecedor());

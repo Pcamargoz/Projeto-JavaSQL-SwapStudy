@@ -11,6 +11,19 @@ import java.util.Objects;
 public class PuxarContratos  {
     private int fornecedor_id;
     private String fornecedor;
+    private String servico;
+    private double precoM;
+    private int id;
+
+    public String getServicoSwap() {
+        return servicoSwap;
+    }
+
+    public void setServicoSwap(String servicoSwap) {
+        this.servicoSwap = servicoSwap;
+    }
+
+    private String servicoSwap;
 
     @Override
     public String toString() {
@@ -20,12 +33,12 @@ public class PuxarContratos  {
                 ", servico='" + servico + '\'' +
                 ", precoM=" + precoM +
                 ", id=" + id +
+                ", servicoSwap='" + servicoSwap + '\'' +
                 '}';
     }
 
-    private String servico;
-    private double precoM;
-    private int id;
+
+
 
     public String getFornecedor() {
         return fornecedor;
@@ -89,12 +102,13 @@ public class PuxarContratos  {
 
     public PuxarContratos() {}
 
-    public PuxarContratos(String fornecedor, String servico, double precoM, int id,int fornecedor_id) {
+    public PuxarContratos(String fornecedor, String servico, double precoM, int id,int fornecedor_id,String servicoSwap) {
         this.fornecedor = fornecedor;
         this.servico = servico;
         this.precoM = precoM;
         this.id = id;
         this.fornecedor_id = fornecedor_id;
+        this.servicoSwap = servicoSwap;
     }
 
 
@@ -105,7 +119,7 @@ public class PuxarContratos  {
     // *** MÉTODO CORRETO: recebe a conexão aberta da application ***
     public static void carregarContratos(Connection conn) {
 
-        String sql = "SELECT id, nome_fornecedor, servico, preco_moedas FROM contratos";
+        String sql = "SELECT id, nome_fornecedor, servico, preco_moedas,fornecedor_id, servico_swap FROM contratos";
 
         try (PreparedStatement st = conn.prepareStatement(sql);
              ResultSet rs = st.executeQuery()) {
@@ -118,7 +132,8 @@ public class PuxarContratos  {
                 String servico = rs.getString("servico");
                 double preco = rs.getDouble("preco_moedas");
                 int fornecedor_id = rs.getInt("fornecedor_id");
-                list.add(new PuxarContratos(fornecedor, servico, preco, id,fornecedor_id));
+                String servicoSwap = rs.getString("servico_swap");
+                list.add(new PuxarContratos(fornecedor, servico, preco, id,fornecedor_id,servicoSwap));
             }
 
         } catch (SQLException e) {
